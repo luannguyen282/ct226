@@ -1,0 +1,123 @@
+@import "seller.css";
+
+#main{
+	background: #EDEDED;
+}
+
+.detail-header{
+	background: white;
+	width: calc(inherit-30);
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	padding: 15px 25px 15px 25px;
+}
+.detail{
+	background: white;
+	margin: 3px 0 0 0;
+	border-radius: 5px;
+	padding: 15px 25px 15px 25px;
+	display: block;
+	float: left;
+	width: 325px;
+}
+.header-container{
+	width: inherit;
+	display: flex;
+	float: left;
+	justify-content: space-between;
+}
+.product{
+	height: 460px;
+}
+.product-photo{
+	width: 290px; 
+	height: 340px;
+}
+.order-info{
+	background: white; 
+	margin: 3px 0 0 0;
+	border-radius: 5px;
+	padding: 15px 25px 15px 25px;
+	display: block;
+	float: left;
+	width: 545px; height: 510px;
+	margin-left: 5px;
+}
+.info{
+	width: inherit; 
+	height: 210px;
+}
+.info-img{
+	width: inherit;
+	height: 130px;
+}
+.stepper{
+	width: 545px;
+	margin-top: 45px;
+}
+.stepper-text-container{
+	display: flex;
+	justify-content: space-between;
+}
+.stepper-text{
+	width: 110px;
+	height: 60px;
+	text-align: center;
+}
+.info-detail{
+	width: inherit;
+	margin-top: 20px;
+}
+.info-detail-text{
+	width: inherit; 
+	height: 25px; 
+	margin-top: 20px; 
+	line-height: 25px; 
+	display: flex; 
+	align-items: center;
+}
+.dot{
+	height: 15px;
+	width: 15px;
+	background: #26aa99;
+	border-radius: 50%;
+	float: left;
+}
+.ift-time{
+	margin-left: 20px;
+}
+.ift-text{
+	margin-left: 5px;
+	color: #26aa99;
+	font-style: italic;
+}
+.ift-text-c{
+	margin-left: 5px;
+	color: red;
+	font-style: italic;
+}
+.status{
+	color: orange;
+}
+.text a{
+	text-decoration: none;
+}
+.stc-time{
+	color: silver;
+}
+.thanks{
+	margin-top: 20px;
+	width: inherit;
+	text-align: center;
+}
+.thanks hr{
+	color: darkgray;
+}
+.thanks p{
+	margin-top: 10px;
+	color: darkgray;
+}
+.button-2{
+	margin-left: 10px;
+}

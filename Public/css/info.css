@@ -1,0 +1,116 @@
+@import "seller.css";
+
+#change-avatar{
+	height: 35px;
+	width: 35px;
+	background: #3A454B;
+	float: left;
+	border-radius: 50%;
+	margin: 110px 10px 10px 110px;
+	position: absolute;
+	cursor: pointer;
+}
+
+#seller input{
+	border: none;
+	padding: 2px;
+}
+
+#avatar-container img{
+	float: left;
+	position: absolute;
+}
+
+#svg-container{
+	width: 25px;
+	height: 25px;
+	margin: 5px;
+}
+
+#but-container{
+	width: 320px;
+	height: 37px;
+	margin-left: 80px;
+}
+
+.subp{
+	margin-left: 10px;
+}
+
+.name input{
+	font-size: 14px;
+}
+
+#seller{
+	height: 240px;
+}
+
+#add-new-pro{
+	text-align: center;
+	line-height: 500px;
+	font-size: 18px;
+	font-weight: bold;
+	background: #F0F2F5;
+}
+
+#but-add-new{
+	height: inherit;
+	width: inherit;
+	border: none;
+	font-size: 20px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+#but-add-new:hover{
+	background: #CCCCCC;
+}
+
+.new-pro-photo-container{
+	width: 290px;
+	height: 87px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+.new-pro-photo{
+	width: 58px;
+	height: 68px;
+	margin: 10px;
+	float: left;
+}
+#add-new-2{
+	display: none;
+}
+.radio2{
+	margin-left: 15px;
+}
+#new-pro-price{
+	display: none;
+}
+.add-pro-photo{
+	display: none;
+}
+.new-pro-photo{
+	cursor: pointer;
+	border: 1px solid gray;
+}
+.product select{
+	padding: 2px;
+}
+.button-2{
+	margin-left: 10px;
+}
+
+#exchanging{
+	width: inherit;
+	height: inherit;
+	display: none;
+}
+
+#lock{
+	width: inherit;
+	height: inherit;
+	display: none;
+}

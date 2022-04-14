@@ -1,0 +1,161 @@
+@import "home.css";
+
+#main{
+	width: 1098px;
+	height: 570px;
+	background: white;
+	margin-left: 215px;
+	margin-top: 20px;
+}
+
+#pro-photo-container{
+	padding: 20px;
+	float: left;
+}
+
+.pro-photo-show{
+	height: 442px;
+	width: 377px;
+	background: lightgray;
+	margin-left: 10px;
+}
+
+.pro-photo-show img{
+	height: inherit;
+	width: inherit;
+}
+
+#pro-photo-button-container{
+	width: 377px;
+	height: 88px;
+	margin-left: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.pro-photo-button{
+	width: 58px;
+	height: 68px;
+	margin: 10px;
+	float: left;
+}
+
+#center{
+	width: 320px;
+	height: 470px;
+	margin-top: 20px;
+	padding: 30px;
+	float: left;
+	background: lightgray;
+}
+
+#info-header{
+	width: 320px;
+	height: 21px;
+	float: left;
+}
+
+#marker{
+	width: 7px;
+	height: 21px;
+	margin-right: 12px;
+	background: black;
+	float: left;
+}
+
+#info{
+	width: 320px;
+	height: 370px;
+	float: left;
+	margin-top: 20px;
+}
+
+#info p{
+	margin-top: 7px;
+}
+
+#info span{
+	font-weight: bold;
+	margin-right: 5px;
+}
+
+#right{
+	width: 220px;
+	height: 510px;
+	float: left;
+	padding: 10px;
+	margin: 20px;
+	background: lightgray;
+}
+
+#right h3{
+	margin-top: 10px;
+	text-align: center;
+}
+
+#avatar-container{
+	width: 150px;
+	height: 150px;
+	margin: 20px 35px 10px 35px;
+}
+
+#avatar-container img{
+	width: inherit;
+	height: inherit;
+	border-radius: 50%;
+	border: 1px solid gray;
+}
+
+#right span{
+	font-weight: bold;
+}
+
+#right p{
+	font-size: 14px;
+}
+
+.name {
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+
+
+
+#seller{
+	height: 200px;
+}
+
+#seller-button{
+	width: 220px;
+	height: 35px;
+	display: flex;
+	justify-content: center;
+}
+
+#more-info{
+	font-size: 15px;
+
+}
+
+#pps1{
+	display: block;
+}
+#pps2{
+	display: none;
+}
+#pps3{
+	display: none;
+}
+
+#b3{
+	font-size: 15px;
+}
+
+#b4{
+	font-size: 15px;
+	margin-left: 15px;
+}

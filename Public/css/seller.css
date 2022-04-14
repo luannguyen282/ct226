@@ -1,0 +1,115 @@
+@import "home.css";
+
+#main{
+	width: 1350px;
+	height: 635px;
+	margin-left: 90px;
+	margin-top: 20px;
+}
+
+#left{
+	width: 320px;
+	height: 510px;
+	float: left;
+	padding: 10px;
+	margin: 20px 0px 20px 20px;
+}
+
+#left h3{
+	margin-top: 10px;
+	text-align: center;
+}
+
+#avatar-container{
+	width: 150px;
+	height: 150px;
+	margin: 20px 85px 10px 85px;
+}
+
+#avatar-container img{
+	width: inherit;
+	height: inherit;
+	border-radius: 50%;
+	border: 1px solid gray;
+}
+
+#left span{
+	font-weight: bold;
+}
+
+#left p{
+	font-size: 14px;
+}
+
+.name {
+	text-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.subp{
+	margin-left: 10px;
+}
+#but{
+	margin-top: 420px;
+	
+}
+
+
+#seller{
+	height: 220px;
+}
+
+#right{
+	width: 975px;
+	height: 600px;
+	float: left;
+	margin: 20px 0px 20px 0px;
+}
+
+#tag{
+	list-style: none;
+	width: 975px;
+	height: 33px;
+	background: #3A454B;
+	float: left;
+}
+
+#tag li{
+	float: left;
+	padding: 5px 10px 5px 10px;
+	font-size: 15px;
+	color: white;
+	cursor: pointer;
+}
+
+
+#li1{
+	background: #FFAE00;
+}
+#li2{
+	background: #3A454B;
+}
+
+#seller-pro{
+	height: inherit;
+	width: inherit;
+	background: white;
+}
+
+#sharing{
+	width: inherit;
+	height: inherit;
+	display: block;
+}
+
+#shared{
+	width: inherit;
+	height: inherit;
+	display: none;
+}
+
+#exchange{
+	margin-left: 15px;
+}

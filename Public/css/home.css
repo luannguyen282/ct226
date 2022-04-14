@@ -1,0 +1,334 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,1200,700,800,900');
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background-image: url("../images/backgrounds/bg3.jpg");
+	font-family: 'Poppins', sans-serif;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+#sub-menu{
+	height: 35px;
+	width: 100%;
+	background: silver;
+}
+
+#sub-menu ul{
+	list-style: none;
+	margin-right: 30px;
+}
+
+#sub-menu li{
+	float: right;
+}
+
+#sub-menu a{
+	text-decoration: none;
+	height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+	padding: 0 15px 0 15px;
+	color: darkblue;
+
+}
+
+#sub-menu a:hover{
+	font-weight: 500;
+	color: blue;
+}
+
+#header{
+	height: 90px;
+	width: 100%;
+	background: white;
+}
+
+#header img{
+	width: 250px;
+	height: 69px;
+	margin: 10px 50px 10px 200px;
+	float: left;
+}
+
+#search{
+	float: left;
+	height: inherit;
+	width: 400px;
+}
+
+#search-box{
+	margin-top: 25px;
+	height: 38px;
+	width: 398px;
+	border: 2px solid silver;
+	border-radius: 10px;
+}
+
+#search-box input{
+	float: left;
+	width: 310px;
+	height: 36px;
+	border: none;
+	margin: 1px 20px 1px 30px;
+	font-size: 15px;
+}
+
+#search-box input:focus{
+	outline: none;
+}
+
+#search-box button{
+	border: none;
+	cursor: pointer;
+}
+
+#search-box img{
+	float: left;
+	width: 38px;
+	height: 38px;
+	margin: 0;
+	border-radius: 0 10px 10px 0;
+}
+
+#header-button-box{
+	height: 90px;
+	
+	float: left;
+	margin-left: 70px;
+}
+
+#header-button-box a{
+	text-decoration: none;
+	line-height: 14px;
+}
+
+.button-container{
+	height: inherit;
+	width: 100px;
+	float: left;
+	text-align: center;
+	color: #82869E;
+	margin-left: 10px;
+}
+
+.button-container:hover{
+	color: #8c92ff;
+	filter: 
+	    invert(0.5)
+	    sepia(1)
+	    hue-rotate(200deg)
+	    saturate(4)
+	    brightness(1);	
+}
+
+#current{
+	color: #8c92ff;
+	filter: 
+	    invert(0.5)
+	    sepia(1)
+	    hue-rotate(200deg)
+	    saturate(4)
+	    brightness(1);
+}
+
+.header-button{
+	margin: 10px 25px 5px 25px;
+}
+
+
+
+.button-title{
+	font-size: 14px;
+	font-weight: 500;
+}
+
+
+
+
+
+
+
+#main{
+	width: 1298px;
+	height: 1150px;
+	background: white;
+	margin-left: 115px;
+	margin-top: 20px;
+}
+
+#footer{
+	position: absolute;
+	margin-top: 20px;
+	width: 1225px;
+	background: white;
+	margin-left: 135px;
+	border-radius: 15px 15px 0 0;
+	padding: 15px;
+}
+
+#footer-logo{
+	float: left;
+	margin-left: 20px;
+	margin-right: 40px;
+}
+
+#footer-logo img{
+	width: 80px;
+	height: 80px;
+}
+
+#footer-text{
+	color: #737373;
+	font-size: 14px;
+	float: left;
+}
+
+
+
+
+
+#filter{
+	float: left;
+	margin: 20px 0 10px 20px;
+	font-size: 14px;
+}
+
+#filter label{
+	margin: 0 10px 0 25px;
+}
+
+#filter select{
+	font-size: 14px;
+	padding: 2px 5px 2px 5px;
+}
+
+
+#filter input{
+	padding: 2px 5px 2px 5px;
+	margin-right: 25px;
+}
+
+#product-container{
+	width: inherit;
+	height: inherit;
+	float: left;
+
+}
+
+.product{
+	width: 300px;
+	height: 500px;
+	margin: 11px;
+	float: left;
+	border: 1px solid lightgray;
+	box-shadow: 2px 2px 2px 2px lightgray;
+}
+
+.photo-container{
+	width: 290px;
+	height: 340px;
+	background: blue;
+	margin: 5px;
+}
+
+.photo-container img{
+	width: 290px;
+	height: 340px;
+	border: 1px solid gray;
+}
+
+.pro-info{
+	width: 270px;
+	margin: 15px;
+	font-size: 15px;
+	font-family: sans-serif;
+}
+
+.pro-name{
+	margin: 5px 0 5px 0;
+}
+
+.pro-quality{
+	margin: 5px 0 5px 0;
+}
+
+.pro-desciption{
+	margin: 5px 0 5px 0;
+}
+
+.pro-price{
+	margin: 5px 0 10px 0;
+}
+
+
+.pro-info p{
+	float: left;
+	margin-right: 5px;
+	color: gray;
+}
+
+.pro-button{
+	float: left;
+	height: 30px;
+	width: inherit;
+	display: flex;
+	justify-content: center;
+}
+
+.button-1{
+	float: left;
+	border: 2px solid blue;
+	padding: 5px 10px 5px 10px;
+	color: blue;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.button-2{
+	float: left;
+	padding: 7px 12px 7px 12px;
+	background: blue;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+#b2{
+	margin-left: 15px;
+}
+
+.page-num{
+	width: inherit;
+	display: flex;
+	float: left;
+	margin-top: 5px;
+	justify-content: center;
+}
+
+.page-num-button{
+	padding: 6px 8px 6px 8px;
+	margin: 2px;
+}
+.hidden{
+	display: none;
+}
+
+#empty-cart{
+	height: inherit;
+	width: inherit;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+}
+#empty-cart img{
+	height: 479px;
+	width: 700px;
+
+}
