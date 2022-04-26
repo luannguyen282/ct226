@@ -86,6 +86,16 @@ function editProC(num){
 	document.getElementById('product-d'+num).style="display: block;";
 
 }
+function editProa(num){
+	document.getElementById('product-a'+num).style="display: none;";
+	document.getElementById('product-aE'+num).style="display: block;";
+}
+
+function editProaC(num){
+	document.getElementById('product-aE'+num).style="display: none;";
+	document.getElementById('product-a'+num).style="display: block;";
+
+}
 var sumpagea=0, currentpagea=1;
 var sumpageb=0, currentpageb=1;
 var sumpagec=0, currentpagec=1;

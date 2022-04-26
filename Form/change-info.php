@@ -40,6 +40,7 @@
                     
                     if (mysqli_query($con, "UPDATE `nguoidung` SET `hinhdaidien`='".$avatar_name."' WHERE `username` LIKE '".$_SESSION['username']."';")) {
                         echo "cập nhật thành công";
+                        $_SESSION['user_valid']=true;
                     }else echo "cập nhật thất bại";
                 }else  {
                     $_SESSION['error_avatar']=true;

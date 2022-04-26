@@ -27,7 +27,10 @@
 		echo "<script>alert('".$error."');</script>";
 		unset($_SESSION['error']);
 	}else{
-		if(isset($_SESSION['error']) && $_SESSION['error']==false) echo "<script>alert('Cập nhật thông tin thành công!');</script>";
+		if(isset($_SESSION['error']) && $_SESSION['error']==false) {
+			unset($_SESSION['error']);
+			echo "<script>alert('Cập nhật thông tin thành công!');</script>";
+		}
 	}
 	if(isset($_SESSION['a_error']) && $_SESSION['a_error']){
 		$error="Chú ý: ";
@@ -49,7 +52,10 @@
 		echo "<script>alert('".$error."');</script>";
 		unset($_SESSION['a_error']);
 	}else{
-		if(isset($_SESSION['a_error']) && $_SESSION['a_error']==false) echo "<script>alert('Cập nhật thông tin tài liệu thành công!');</script>";
+		if(isset($_SESSION['a_error']) && $_SESSION['a_error']==false) {
+			echo "<script>alert('Cập nhật thông tin tài liệu thành công!');</script>";
+			unset($_SESSION['a_error']);
+		}
 	}
 	if (isset($_SESSION['unlock_fail']) && $_SESSION['unlock_fail']) {
 		echo "<script>alert('Bỏ ẩn tài liệu thất bại!\\nChi tiết: Tài liệu chưa có ảnh không được phép hiển thị!');</script>";
@@ -300,11 +306,66 @@
 											<div class="pro-price"><p>Giá:</p> <?php echo $dstl['gia']; ?> vnđ</div>
 											<div class="pro-button">
 												<input type="submit" class="button-1" name="lock" value="Tạm ẩn">
-												<input type="submit" class="button-2" name="edit" value="Chỉnh sửa">
+												<input type="button" class="button-2" value="Chỉnh sửa" onclick="editProa(<?php echo $pid; ?>);">
 											</div>	
 										</div>
 										
 									</div>
+								</form>
+								<form method="POST" action="../Form/edit-product.php" enctype="multipart/form-data">
+									<div class="product" id="product-aE<?php echo $pid; ?>" style="display: none;">
+										<div class="new-pro-photo-container">
+											<input type="file" id="ppe1" name="pp1" class="add-pro-photo">
+											<input type="file" id="ppe2" name="pp2" class="add-pro-photo">
+											<input type="file" id="ppe3" name="pp3" class="add-pro-photo">
+											<?php 
+												$dsh = mysqli_query($con, "SELECT * FROM `hinhtailieu` WHERE `matailieu` = ".$dstl['matailieu'].";");
+												$c=0;
+												while($htl=mysqli_fetch_array($dsh)){
+													$c++;
+
+													echo "<img src=\"../Database/photo/".$htl['tenhinh']."\" id=\"pps$c\" class=\"new-pro-photo\" onclick=\"addProPhoto('e".$c."');\">";
+													echo "<input type=\"hidden\" name=\"mh".$c."\" value=\"".$htl['mahinh']."\">";
+												}
+												while($c<3){
+													$c++;
+													echo "<img src=\"../Database/photo/no_image.png\" id=\"pps$c\" class=\"new-pro-photo\" onclick=\"addProPhoto('e".$c."');\">";
+												}
+											 ?>
+												
+										</div>
+										<div class="pro-info">
+										<input type="hidden" name="matailieu" value="<?php echo $dstl['matailieu']; ?>">
+										<div class="pro-name"><p>Tên:</p><input type="text" name="t" value="<?php echo $dstl['tentailieu']; ?>" required></div>
+										<div class="pro-name"><p>Học phần:</p><input type="text" name="hp" size="3" value="<?php echo $dstl['hocphan']; ?>" required></div>
+										<div class="pro-name"><p>Khoa: </p><select name="kh" style="padding: 2px;">
+											<?php 
+												$dsk = mysqli_query($con, "SELECT * FROM `khoa`;");
+												while($dskhoa = mysqli_fetch_array($dsk)){
+											 ?>
+											 <option value="<?php echo $dskhoa['makhoa']; ?>" <?php if($dskhoa['makhoa']==$dstl['makhoa']){echo "selected";} ?>><?php echo $dskhoa['tenkhoa']; ?></option>
+											<?php } ?>
+											</select></div>
+										<div class="pro-name"><p>Tác giả:</p><input type="text" name="tg" value="<?php echo $dstl['tacgia']; ?>" required></div>
+										<div class="pro-name"><p>Loại tài liệu: </p><select name="ml">
+											<?php 
+												$ltl = mysqli_query($con, "SELECT * FROM `loaitailieu`;");
+												while($dsltl = mysqli_fetch_array($ltl)){
+											 ?>
+											 <option value="<?php echo $dsltl['maloai']; ?>" <?php if($dsltl['maloai']==$dstl['maloai']){echo "selected";} ?>><?php echo $dsltl['tenloai']; ?></option>
+											<?php } ?>
+											</select></div>
+										<div class="pro-name"><p>Số trang:</p><input type="number" name="st" min="1" max="9999" value="<?php echo $dstl['sotrang']; ?>" required> trang</div>
+										<div class="pro-name"><p>Chất lượng:</p><input type="number" name="cl" min="1" max="100" value="<?php echo $dstl['chatluong']; ?>" required> %</div>
+										<div class="pro-name"><p>Mô tả:</p><input type="text" name="mt" value="<?php echo $dstl['mota']; ?>" required></div>
+										<div class="pro-name"><p>Hình thức: </p><input type="radio" name="ht" value="0" onclick="eradio1();" class="radio1" <?php if($dstl['gia']==0){echo "checked";} ?>> Tặng<input type="radio" name="ht" value="1" onclick="eradio2();" class="radio2" <?php if($dstl['gia']!=0){echo "checked";} ?>> Bán</div>
+										<div class="pro-name" id="edit-pro-price" <?php if ($dstl['gia']==0) echo "style=\"display: none;\""; ?>><p>Giá:</p><input type="number" name="g" min="1000" max="999999" value="<?php echo $dstl['gia']; ?>" > vnđ</div>
+										<div class="pro-button" style="margin-top: 20px;">
+											<input type="button" class="button-1" value="Huỷ bỏ" onclick="editProaC(<?php echo $pid; ?>);">
+											<input type="submit" class="button-2" name="edit" value="Lưu thay đổi">
+										</div>	
+										</div>
+									</div>			
 								</form>
 							
 						<?php

@@ -67,10 +67,13 @@
    	$_SESSION['a_error']=true;
    	$_SESSION['a_error_sql']=true;
    }
-   if (isset($_SESSION['a_error']) && $_SESSION['a_error']) {
+//   if (isset($_SESSION['a_error']) && $_SESSION['a_error']) {
+    if($_FILES['pp1']['error']!=0 && $_FILES['pp2']['error']!=0 && $_FILES['pp3']['error']!=0){
    	echo "test";
    	echo "UPDATE `tailieu` SET `matrangthai` = 'lock' WHERE `tailieu`.`matailieu` = $m;";
    	mysqli_query($con,"UPDATE `tailieu` SET `matrangthai` = 'lock' WHERE `tailieu`.`matailieu` = $m;");
+    $_SESSION['a_error_upload']=true;
+    $_SESSION['a_error']=true;
    }
   
    header("Location: ../Public/info.php");
