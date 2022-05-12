@@ -53,6 +53,38 @@ function faccept() {
     });       
 }
 
-function fexchange() {
-    if(confirm('Bạn có chắc muốn yêu cầu trao đổi?\nKhi yêu cầu được người đăng chấp nhận, bạn và người đăng sẽ được cung cấp thông tin liên hệ của nhau!')) document.getElementById('exchange').click();
+function fexchange(num) {
+    if(confirm('Bạn có chắc muốn yêu cầu trao đổi?\nKhi yêu cầu được người đăng chấp nhận, bạn và người đăng sẽ được cung cấp thông tin liên hệ của nhau!')) document.getElementById('exchange'+num).click();
 }
+
+var noti_status='off';
+        var coat_status='off';
+        function coat(status){
+            if(status==='on'){
+                document.getElementById('coat').style='display: block';
+                coat_status='on';
+            }
+            else{
+                document.getElementById('coat').style='display: none';
+                coat_status='off';
+            }
+        }
+        function noti() {
+            if (noti_status==='off') {
+                document.getElementById('noti').style='display: block';
+                noti_status='on';
+                coat('on');
+            }
+            else{
+                document.getElementById('noti').style='display: none';
+                noti_status='off';
+                coat('off');
+            }
+        }
+        function button_off() {
+            if (noti_status!=='off') {
+                document.getElementById('noti').style='display: none';
+                noti_status='off';
+                coat('off');
+            }
+        }

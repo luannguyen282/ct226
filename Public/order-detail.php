@@ -42,25 +42,28 @@
 	<link rel="stylesheet" type="text/css" href="css/order-detail.css">
 	<script type="text/javascript" src="js/alert.js"></script>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
 
 </head>
 <body>
 	
+		<div id="coat" onclick="button_off();"></div>
+	
 	<div id="sub-menu">
 		<ul>
-			<li id="smenu-6"><a href="../index.php" style="color: blue;">Đăng xuất</a></li>
-			<li id="smenu-5"><a href="">Hỗ trợ</a></li>
-			<li id="smenu-4"><a href="">Thông tin liên hệ</a></li>			
-			<li id="smenu-3"><a href="">Điều khoản</a></li>
-			<li id="smenu-2"><a href="">Hướng dẫn sử dụng</a></li>
-			<li id="smenu-1"><a href="">Giới thiệu website</a></li>
+			<li id="smenu-6"><a href="../Form/logout.php" style="color: blue;">Đăng xuất</a></li>
+			<li id="smenu-5" onclick="click_object('smsb-5');"><a>Góp ý và khiếu nại</a><form action="report.php"><input type="submit" class="hidden" id="smsb-5" name="loai" value="gykn"></form></li>
+			<li id="smenu-4"><a onclick="report('not_valid');">Tố cáo</a></li>			
+			<li id="smenu-3"><a href="policies.html">Điều khoản</a></li>
+			<li id="smenu-2"><a href="tutorial.html">Hướng dẫn sử dụng</a></li>
+			<li id="smenu-1"><a href="introduce.html">Giới thiệu website</a></li>
 		</ul>
 	</div>
 
 	<div id="header">
 		<a href="home.php"><img src="images/banner.png"></a>
 		<div id="search">
-			<form action="home.php">
+			<form>
 				<div id="search-box">
 					<input type="text" name="search-input" id="search-input" placeholder="Nhập từ khoá cần tìm...">
 					<button type="submit"><img src="images/search-button.png"></button>
@@ -80,7 +83,7 @@
 			</div>
 			</a>
 			<a href="order.php">
-				<div class="button-container" id="current">
+				<div class="button-container">
 					<svg fill="none" viewBox="0 0 24 24" size="40" class="header-button" color="textSecondary" height="40" width="40" xmlns="http://www.w3.org/2000/svg">
 						<path fill-rule="evenodd" clip-rule="evenodd" d="M7.5328 3.5625C7.5328 3.14829 7.86859 2.8125 8.2828 2.8125H15.2308C15.645 2.8125 15.9808 3.14829 15.9808 3.5625V3.80501H19.201C19.6152 3.80501 19.951 4.14079 19.951 4.55501V20.4361C19.951 20.8503 19.6152 21.1861 19.201 21.1861H4.3125C3.89829 21.1861 3.5625 20.8503 3.5625 20.4361V4.55501C3.5625 4.14079 3.89829 3.80501 4.3125 3.80501H7.5328V3.5625ZM15.9808 7.53276V5.30501H18.451V19.6861H5.0625V5.30501H7.5328V7.53276C7.5328 7.94698 7.86859 8.28276 8.2828 8.28276H10.0198C10.434 8.28276 10.7698 7.94698 10.7698 7.53276C10.7698 7.30843 11.0628 6.87111 11.7568 6.87111C12.4508 6.87111 12.7438 7.30843 12.7438 7.53276C12.7438 7.94698 13.0796 8.28276 13.4938 8.28276H15.2308C15.645 8.28276 15.9808 7.94698 15.9808 7.53276ZM9.0328 4.3125V6.78276H9.41784C9.7871 5.89836 10.7889 5.37111 11.7568 5.37111C12.7247 5.37111 13.7265 5.89836 14.0957 6.78276H14.4808V4.3125H9.0328ZM15.4476 12.0333C15.7405 11.7404 15.7405 11.2655 15.4476 10.9726C15.1547 10.6797 14.6798 10.6797 14.3869 10.9726L11.0384 14.3211L9.80564 13.0883C9.51275 12.7954 9.03787 12.7954 8.74498 13.0883C8.45209 13.3812 8.45209 13.8561 8.74498 14.149L10.5081 15.9121C10.6487 16.0527 10.8395 16.1318 11.0384 16.1318C11.2373 16.1318 11.4281 16.0527 11.5688 15.9121L15.4476 12.0333Z" fill="#82869E">
 								
@@ -96,13 +99,39 @@
 								
 						</path>
 					</svg>
-				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` LIKE '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
+				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` = '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
 			</div>
 			</a>
-			<a href="">
+			<a id="button-noti" onclick="noti();">
 				<div class="button-container">
 					<svg fill="none" viewBox="0 0 24 24" class="header-button" size="40" color="textSecondary" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M5.99398 13V9C5.99398 5.686 8.68298 3 12 3C12.7883 2.99961 13.569 3.15449 14.2975 3.4558C15.0259 3.75712 15.6879 4.19897 16.2456 4.75612C16.8033 5.31327 17.2458 5.97481 17.5479 6.70298C17.8499 7.43115 18.0056 8.21168 18.006 9V13C18.006 13.986 18.454 14.919 19.223 15.537L19.532 15.785C20.449 16.521 19.928 18 18.752 18H5.24798C4.07198 18 3.55098 16.521 4.46798 15.785L4.77698 15.537C5.15686 15.2322 5.46344 14.846 5.67408 14.4069C5.88472 13.9678 5.99404 13.487 5.99398 13V13Z" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.5 21H13.5" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 				<span class="button-title">Thông báo</span>
+			</div>
+
+			<div id="noti">
+				<ul>
+					<?php $notis=mysqli_query($con,"SELECT * FROM `thongbao` WHERE `username`='".$_SESSION['username']."'"); 
+						
+						$now = time();
+						while($noti=mysqli_fetch_array($notis)){
+							date_default_timezone_set('Asia/Ho_Chi_Minh');
+   							 
+
+					?>
+					<li><span class="noti-time"><?php 
+						$time=$now-strtotime($noti['thoigian']); 
+						if($time/(24*60*60) > 1) echo floor($time/(24*60*60))." ngày trước: ";
+						else{
+							if($time/(60*60) > 1) echo floor($time/(60*60))." giờ trước: ";
+								else echo floor($time/60)." phút trước: ";
+							}
+					?></span><span class="noti-text"><?php echo $noti['noidung']; ?></span></li>
+					<?php } ?>
+				</ul>
+				<div class="noti-but-con" <?php if(mysqli_num_rows($notis)==0) echo "style=\"display: none;\""; ?>>
+					<input type="submit" class="button-2" name="readall" value="Đã đọc hết" onclick="readall();">
+				</div>
+				<?php if(mysqli_num_rows($notis)==0) echo "<div class=\"noti-no\">Không có thông báo mới!</div>"; ?>
 			</div>
 		</a>	
 		</div>

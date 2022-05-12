@@ -1,0 +1,89 @@
+@import "home.css";
+
+
+#content{
+	width: inherit;
+	display: flex;
+	justify-content: center;
+}
+#main{
+	width: 500px;
+	height: 600px;
+}
+
+.h1{
+	margin-top: 30px;
+	width: inherit;
+	text-align: center;
+	padding: 15px 0 15px 0;
+	color: red;
+}
+#option{
+	width: inherit;
+	min-height: 54px;
+	background: #3A454B;
+}
+#option li{
+	list-style: none;
+	float: left;
+	padding: 15px 20px 15px 20px;
+	color: white;
+	background: #3A454B;
+	cursor: pointer;
+}
+#option li:hover{
+	background: #FFAE00;
+}
+.form-content{
+	width: 400px;
+	padding: 0 50px 0 50px;
+}
+.line-text{
+	width: inherit;
+	margin: 7px 0 7px 0;
+}
+.button-contain{
+	width: 400px;
+	height: 35px;
+	display: flex;
+	justify-content: center;
+}
+input{
+	margin: 0 5px 0 5px;
+}
+.readonly-input{
+	border: none;
+	color: gray;
+	font-size: 16px;
+	font-style: italic;
+}
+.coat{
+	width: 400px;
+	height: 30px;
+	position: absolute;
+}
+#content-1{
+	display: none;
+}
+#content-2{
+	display: none;
+}
+#content-3{
+	display: none;
+}
+textarea{
+	font-size: 16px;
+}
+.ts{
+	font-style: italic;
+	color: red;
+}
+.tb{
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+.tb th, td{
+	padding: 5px;
+	text-align: center;
+	border: 1px solid black;
+}

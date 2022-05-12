@@ -19,7 +19,7 @@
    	$g=0;
    }else $g=$_POST['g'];
 
-   echo $sql = "INSERT INTO `tailieu` (`matailieu`, `tentailieu`, `hocphan`, `makhoa`, `tacgia`, `sotrang`, `maloai`, `chatluong`, `gia`, `mota`, `username`, `matrangthai`) VALUES ('$m', '$t', '$hp', '$kh', '$tg', '$st', '$ml', '$st', '$g', '$mt', '$username', 'sharing');";
+   echo $sql = "INSERT INTO `tailieu` (`matailieu`, `tentailieu`, `hocphan`, `makhoa`, `tacgia`, `sotrang`, `maloai`, `chatluong`, `gia`, `mota`, `username`, `matrangthai`) VALUES ('$m', '$t', '$hp', '$kh', '$tg', '$st', '$ml', '$cl', '$g', '$mt', '$username', 'sharing');";
    $result = mysqli_query($con, $sql);
    if ($result!=false) {
    	$dir = "C:\\xampp\htdocs\CT226\Database\photo/";

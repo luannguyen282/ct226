@@ -1,7 +1,6 @@
 <?php 
 	session_start(); 
 	include_once('../Form/conn.php');
-	if(empty($_SESSION['username'])) header("Location: ../index.php");
 	$_SESSION['page']=1;
 	if (isset($_GET['page'])) {
 		$_SESSION['page']=$_GET['page'];
@@ -25,6 +24,10 @@
 	$user=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` LIKE '".$_SESSION['username']."'"));
 	if ($user['k']==NULL || $user['makhoa']==NULL || $user['diachi']==NULL) $_SESSION['user_valid']=false;
 	else $_SESSION['user_valid']=true;
+	if (isset($_SESSION['taodonhang']) && $_SESSION['taodonhang']) {
+		echo "<script>if(confirm('Đã yêu cầu trao đổi. Xem ngay?')) location.assign('order.php');</script>";
+		unset($_SESSION['taodonhang']);
+	}
 ?>
 
 <!DOCTYPE html>
@@ -36,16 +39,15 @@
 	<link rel="stylesheet" type="text/css" href="css/home.css">
 	<script type="text/javascript" src="js/home.js"></script>
 	<script type="text/javascript" src="js/alert.js"></script>
+	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 </head>
 <body>
-	
-		<div id="coat" onclick="button_off();"></div>
 	
 	<div id="sub-menu">
 		<ul>
 			<li id="smenu-6"><a href="../Form/logout.php" style="color: blue;">Đăng xuất</a></li>
-			<li id="smenu-5" onclick="click_object('smsb-5');"><a>Góp ý và khiếu nại</a><form action="report.php"><input type="submit" class="hidden" id="smsb-5" name="loai" value="gykn"></form></li>
-			<li id="smenu-4"><a onclick="report('not_valid');">Tố cáo</a></li>			
+			<li id="smenu-5"><a href="">Góp ý và khiếu nại</a></li>
+			<li id="smenu-4"><a href="">Tố cáo</a></li>			
 			<li id="smenu-3"><a href="policies.html">Điều khoản</a></li>
 			<li id="smenu-2"><a href="tutorial.html">Hướng dẫn sử dụng</a></li>
 			<li id="smenu-1"><a href="introduce.html">Giới thiệu website</a></li>
@@ -91,39 +93,13 @@
 								
 						</path>
 					</svg>
-				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` = '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
+				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` LIKE '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
 			</div>
 			</a>
-			<a id="button-noti" onclick="noti();">
+			<a href="">
 				<div class="button-container">
 					<svg fill="none" viewBox="0 0 24 24" class="header-button" size="40" color="textSecondary" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M5.99398 13V9C5.99398 5.686 8.68298 3 12 3C12.7883 2.99961 13.569 3.15449 14.2975 3.4558C15.0259 3.75712 15.6879 4.19897 16.2456 4.75612C16.8033 5.31327 17.2458 5.97481 17.5479 6.70298C17.8499 7.43115 18.0056 8.21168 18.006 9V13C18.006 13.986 18.454 14.919 19.223 15.537L19.532 15.785C20.449 16.521 19.928 18 18.752 18H5.24798C4.07198 18 3.55098 16.521 4.46798 15.785L4.77698 15.537C5.15686 15.2322 5.46344 14.846 5.67408 14.4069C5.88472 13.9678 5.99404 13.487 5.99398 13V13Z" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.5 21H13.5" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 				<span class="button-title">Thông báo</span>
-			</div>
-
-			<div id="noti">
-				<ul>
-					<?php $notis=mysqli_query($con,"SELECT * FROM `thongbao` WHERE `username`='".$_SESSION['username']."'"); 
-						
-						$now = time();
-						while($noti=mysqli_fetch_array($notis)){
-							date_default_timezone_set('Asia/Ho_Chi_Minh');
-   							 
-
-					?>
-					<li><span class="noti-time"><?php 
-						$time=$now-strtotime($noti['thoigian']); 
-						if($time/(24*60*60) > 1) echo floor($time/(24*60*60))." ngày trước: ";
-						else{
-							if($time/(60*60) > 1) echo floor($time/(60*60))." giờ trước: ";
-								else echo floor($time/60)." phút trước: ";
-							}
-					?></span><span class="noti-text"><?php echo $noti['noidung']; ?></span></li>
-					<?php } ?>
-				</ul>
-				<div class="noti-but-con" <?php if(mysqli_num_rows($notis)==0) echo "style=\"display: none;\""; ?>>
-					<input type="submit" class="button-2" name="readall" value="Đã đọc hết" onclick="readall();">
-				</div>
-				<?php if(mysqli_num_rows($notis)==0) echo "<div class=\"noti-no\">Không có thông báo mới!</div>"; ?>
 			</div>
 		</a>	
 		</div>
@@ -187,7 +163,7 @@
 			<?php
 				 
 				$ps=($page-1)*8;
-				$sql = "SELECT * FROM `tailieu` as a, `giohang` as b WHERE a.`matailieu`=b.`matailieu` AND a.`matrangthai` LIKE 'sharing' AND b.`username` LIKE '".$_SESSION['username']."' AND a.`tentailieu` LIKE '%$keyword%' ".$filter."LIMIT $ps,8;";
+				$sql = "SELECT * FROM `tailieu` WHERE `matrangthai` LIKE 'sharing' AND `tentailieu` LIKE '%$keyword%' ".$filter."LIMIT $ps,8;";
 				$tailieu = mysqli_query($con, $sql);
 				$count=0;
 				while($dstl = mysqli_fetch_array($tailieu)){
@@ -198,7 +174,7 @@
 
 				?>	
 					
-						<form method="GET" action="../Public/product.php">
+						<form method="GET" action="../Form/exchange.php">
 							<div class="product">
 								<a href="../Public/product.php?matailieu=<?php echo $matailieu; ?>" >
 									<div class="photo-container">
@@ -212,24 +188,24 @@
 									<div class="pro-quality"><p>Chất lượng:</p> <?php echo $dstl['chatluong']; ?>%</div>
 									<div class="pro-price"><p>Giá:</p> <?php echo $dstl['gia']; ?> vnđ</div>
 									<div class="pro-button">
-										<input type="button" class="button-1" name="add-to-cart" value="Bỏ đánh dấu" onclick="cart(<?php echo $matailieu; ?>);">
-										<input type="<?php if($_SESSION['user_valid']) echo "submit"; else echo "button"; ?>" class="button-2" id="b2" name="submit" value="Trao đổi ngay" onclick="<?php if ($_SESSION['user_valid']==false) echo"updateInfo();"; ?>">
+										<input type="button" class="button-1" name="add-to-cart" value="Đánh dấu" onclick="addToCart(<?php echo $matailieu; ?>);">
+										<input type="button" class="button-2" id="b2" name="submit" value="Trao đổi ngay" onclick="<?php if ($_SESSION['user_valid']==false) echo "updateInfo();"; else echo "fexchange()"; ?>">
+										<input type="submit" name="exchange" id="exchange" value="exchange" class="hidden">
 									</div>	
 								</div>
 								
 							</div>
 						</form>
-						<div  class="hidden">
-							<form method="GET" action="../Form/remove-from-cart.php" id="form<?php echo $matailieu;?>">
+						<div id="cart<?php echo $matailieu;?>" class="hidden">
+							<form method="GET" action="../Form/add-to-cart.php" id="form<?php echo $matailieu;?>">
 								<input type="text" name="matailieu" value="<?php echo $matailieu; ?>">
-								<input type="submit" name="cart" id="cart<?php echo $matailieu; ?>">
+								<input type="button" name="cart" id="cart<?php echo $matailieu; ?>">
 							</form>
 						</div>
-					
 				<?php
 				$count=$count+1;
 				}
-				$numrows=mysqli_query($con, "SELECT COUNT(*) as `num` FROM `tailieu` as a, `giohang` as b WHERE a.`matailieu`=b.`matailieu` AND a.`matrangthai` LIKE 'sharing' AND b.`username` LIKE '".$_SESSION['username']."' AND a.`tentailieu` LIKE '%$keyword%' ".$filter.";");
+				$numrows=mysqli_query($con, "SELECT COUNT(*) as `num` FROM `tailieu` WHERE `matrangthai` LIKE 'sharing' AND `tentailieu` LIKE '%$keyword%' ".$filter.";");
 				$num=mysqli_fetch_array($numrows);
 				if ($num['num']%8==0) {
 					$mp=$num['num']/8;
@@ -237,7 +213,7 @@
 					$mp=($num['num'] - $num['num']%8)/8 + 1;
 				}
 				if ($count==0) {
-					echo "<div id=\"empty-cart\"><img src=\"../Public/images/empty-cart.png\"></div>";
+					echo "<div id=\"empty-cart\"><img src=\"../Public/images/no-document.png\"></div>";
 				}
 				if ($count<=4) {
 					echo "<script>document.getElementById('main').style=\"height: calc(1150px - 510px);\";</script>";

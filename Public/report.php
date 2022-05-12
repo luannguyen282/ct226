@@ -1,29 +1,8 @@
 <?php 
 	session_start(); 
 	include_once('../Form/conn.php');
-	$_SESSION['page']=1;
-	if (isset($_GET['page'])) {
-		$_SESSION['page']=$_GET['page'];
-	}
-	$page=$_SESSION['page'];
-	if (isset($_GET['search-input'])) {
-		$keyword=$_GET['search-input'];
-	}else{
-		$keyword="";
-	}
-	$filter="";
-	if (isset($_GET['khoa']) && $_GET['khoa']!='all') {
-		$filter=$filter." AND `makhoa` LIKE '".$_GET['khoa']."'";
-	}
-	if (isset($_GET['loai']) && $_GET['loai']!='all') {
-		$filter=$filter." AND `maloai` LIKE '".$_GET['loai']."'";
-	}
-	if (isset($_GET['domoi']) && $_GET['domoi']!='all') {
-		
-	}
-	$user=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` LIKE '".$_SESSION['username']."'"));
-	if ($user['k']==NULL || $user['makhoa']==NULL || $user['diachi']==NULL) $_SESSION['user_valid']=false;
-	else $_SESSION['user_valid']=true;
+	$loai=$_GET['loai'];
+	$username=$_SESSION['username'];
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +11,17 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Trao đổi tài liệu</title>
-	<link rel="stylesheet" type="text/css" href="css/home.css">
+	<link rel="stylesheet" type="text/css" href="css/report.css">
 	<script type="text/javascript" src="js/home.js"></script>
-	<script type="text/javascript" src="js/alert.js"></script>
-	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="js/rp.js"></script>
 </head>
 <body>
-	
-		<div id="coat" onclick="button_off();"></div>
 	
 	<div id="sub-menu">
 		<ul>
 			<li id="smenu-6"><a href="../Form/logout.php" style="color: blue;">Đăng xuất</a></li>
-			<li id="smenu-5" onclick="click_object('smsb-5');"><a>Góp ý và khiếu nại</a><form action="report.php"><input type="submit" class="hidden" id="smsb-5" name="loai" value="gykn"></form></li>
-			<li id="smenu-4"><a onclick="report('not_valid');">Tố cáo</a></li>			
+			<li id="smenu-5"><a href="">Góp ý và khiếu nại</a></li>
+			<li id="smenu-4"><a href="">Tố cáo</a></li>			
 			<li id="smenu-3"><a href="policies.html">Điều khoản</a></li>
 			<li id="smenu-2"><a href="tutorial.html">Hướng dẫn sử dụng</a></li>
 			<li id="smenu-1"><a href="introduce.html">Giới thiệu website</a></li>
@@ -91,131 +67,98 @@
 								
 						</path>
 					</svg>
-				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` = '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
+				<span class="button-title"><?php $nd=mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `nguoidung` WHERE `username` LIKE '".$_SESSION['username']."';")); echo $nd['ten'] ?></span>
 			</div>
 			</a>
-			<a id="button-noti" onclick="noti();">
+			<a href="">
 				<div class="button-container">
 					<svg fill="none" viewBox="0 0 24 24" class="header-button" size="40" color="textSecondary" height="40" width="40" xmlns="http://www.w3.org/2000/svg"><path d="M5.99398 13V9C5.99398 5.686 8.68298 3 12 3C12.7883 2.99961 13.569 3.15449 14.2975 3.4558C15.0259 3.75712 15.6879 4.19897 16.2456 4.75612C16.8033 5.31327 17.2458 5.97481 17.5479 6.70298C17.8499 7.43115 18.0056 8.21168 18.006 9V13C18.006 13.986 18.454 14.919 19.223 15.537L19.532 15.785C20.449 16.521 19.928 18 18.752 18H5.24798C4.07198 18 3.55098 16.521 4.46798 15.785L4.77698 15.537C5.15686 15.2322 5.46344 14.846 5.67408 14.4069C5.88472 13.9678 5.99404 13.487 5.99398 13V13Z" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.5 21H13.5" stroke="#82869E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
 				<span class="button-title">Thông báo</span>
-			</div>
-
-			<div id="noti">
-				<ul>
-					<?php $notis=mysqli_query($con,"SELECT * FROM `thongbao` WHERE `username`='".$_SESSION['username']."'"); 
-						
-						$now = time();
-						while($noti=mysqli_fetch_array($notis)){
-							date_default_timezone_set('Asia/Ho_Chi_Minh');
-   							 
-
-					?>
-					<li><span class="noti-time"><?php 
-						$time=$now-strtotime($noti['thoigian']); 
-						if($time/(24*60*60) > 1) echo floor($time/(24*60*60))." ngày trước: ";
-						else{
-							if($time/(60*60) > 1) echo floor($time/(60*60))." giờ trước: ";
-								else echo floor($time/60)." phút trước: ";
-							}
-					?></span><span class="noti-text"><?php echo $noti['noidung']; ?></span></li>
-					<?php } ?>
-				</ul>
-				<div class="noti-but-con" <?php if(mysqli_num_rows($notis)==0) echo "style=\"display: none;\""; ?>>
-					<input type="submit" class="button-2" name="readall" value="Đã đọc hết" onclick="readall();">
-				</div>
-				<?php if(mysqli_num_rows($notis)==0) echo "<div class=\"noti-no\">Không có thông báo mới!</div>"; ?>
 			</div>
 		</a>	
 		</div>
 	</div>
 
 
+	<div id="content">
+		<div id="main">
+			<div id="option">
+				<ul>
+					<li id="c1" onclick="<?php if($loai!='gykn') echo "content(1)"; else echo "report('not_valid')";?>">Tố cáo</li>
+					<li id="c2" onclick="content(2);">Góp ý</li>
+					<li id="c3" onclick="content(3);">Lịch sử</li>
+				</ul>
+				
+			</div>
+			<div class="form-content" id="content-1">
+				<div class="h1"><h1>TỐ CÁO</h1></div>
 
-	<div id="main">
-		<div id="filter"><h2>II Danh sách đang trao đổi</h2></div>
-
-		<div id="product-container">
-
-			<?php
-				 
-				$ps=($page-1)*8;
-				$sql = "SELECT * FROM `tailieu` as a, `donhang` as b WHERE a.`matailieu`=b.`matailieu` AND b.`manguoimua` LIKE '".$_SESSION['username']."' AND a.`matrangthai`='exchanging';";
-				$tailieu = mysqli_query($con, $sql);
-				$count=0;
-				while($dstl = mysqli_fetch_array($tailieu)){
-					
-					$matailieu = $dstl['matailieu'];
-					$hinh = mysqli_query($con, "SELECT * FROM `hinhtailieu` WHERE `matailieu` = ".$matailieu.";");
-					$tenhinh = mysqli_fetch_array($hinh);
-
-				?>	
-					
-						<form method="GET" action="../Public/order-detail.php">
-							<div class="product">
-								
-									<div class="photo-container">
-										<img src="../Database/photo/<?php echo $tenhinh['tenhinh']; ?>" style="width: 290px; height: 340px;">
-									</div>
-								
-								<div class="pro-info">
-									<?php $donhang = mysqli_fetch_array(mysqli_query($con, "SELECT * FROM `donhang` as `a`, `chitietdonhang` as `b` WHERE `a`.`madonhang`=`b`.`madonhang` AND `matailieu`='".$matailieu."' AND `b`.`huy` IS NULL;")) ?>
-									<input type="hidden" name="madonhang" value="<?php echo $donhang['madonhang']; ?>">
-									<div class="pro-name"><p>Tên:</p> <?php echo $dstl['tentailieu']; ?></div>
-									<div class="pro-description"><p>Học phần:</p> <?php echo $dstl['hocphan']; ?></div>
-									<div class="pro-quality"><p>Chất lượng:</p> <?php echo $dstl['chatluong']; ?>%</div>
-									<div class="pro-price"><p>Giá:</p> <?php echo $dstl['gia']; ?> vnđ</div>
-									<div class="pro-button">
-										<input type="hidden" name="user" value="nguoimua">
-										<input type="button" class="button-1" name="trangthai" value="Đang yêu cầu">
-										<input type="submit" class="button-2" id="b2" name="submit" value="Chi tiết">
-									</div>	
-								</div>
-								
-							</div>
-						</form>
-						
-				<?php
-				$count=$count+1;
-				}
-				$numrows=mysqli_query($con, "SELECT COUNT(*) as `num` FROM `tailieu` as a, `donhang` as b WHERE a.`matailieu`=b.`matailieu`;");
-				$num=mysqli_fetch_array($numrows);
-				if ($num['num']%8==0) {
-					$mp=$num['num']/8;
-				}else{
-					$mp=($num['num'] - $num['num']%8)/8 + 1;
-				}
-				if ($count==0) {
-					echo "<div id=\"empty-cart\"><img src=\"../Public/images/no-order.png\"></div>";
-				}
-				if ($count<=4) {
-					echo "<script>document.getElementById('main').style=\"height: calc(1150px - 510px);\";</script>";
-				}
-				if ($num['num']>8) {
-			?>
-			
-
-
-			
-			
-			<div class="page-num">
-				<input type="button" class="page-num-button" name="first" value="<<" onclick="page('<<')">
-				<input type="button" class="page-num-button" name="pre" value="<" onclick="page('<')">
-				<input type="button" class="page-num-button" name="1" id="current-page" value="<?php echo $_SESSION['page'];?>">
-				<input type="button" class="page-num-button" name="next" value=">" onclick="page('>')">
-				<input type="button" class="page-num-button" name="last" value=">>" onclick="page('>>')">
-				<form method="GET" style="display: none;" >
-					<input type="text" name="max-page" id="max-page" value=<?php echo $mp; ?>>
-					<input type="submit" name="page" id="page">
+				<form action="../Form/report.php">
+					<div class="line-text"><label>Mã phiếu: </label><input type="text" class="readonly-input" name="ma" value="Tạo tự động" readonly></div>
+					<div class="line-text"><label>Người tố cáo: </label><input type="text" class="readonly-input" name="ntc" value="<?php echo $_SESSION['username'] ?>" readonly></div>
+					<div class="line-text"><label>Phân loại:</label></div>
+					<div class="line-text">
+						<div class="coat"></div>
+						<input type="radio" name="loai" value="tcnd" <?php if($loai=='tcnd') echo 'checked';?>><label>Tố cáo người dùng</label>
+						<input type="radio" name="loai" value="tctl" <?php if($loai=='tctl') echo 'checked';?>><label>Tố cáo tài liệu</label>
+					</div>
+					<div class="line-text"><label>Đối tượng: </label><input type="text" class="readonly-input" name="dtbtc" value="<?php echo $_GET['doituong']; ?>" readonly></div>
+					<div class="line-text"><label>Mô tả: </label></div>
+					<textarea cols="43" rows="5" name="mota" required></textarea>
+					<div class="line-text"><input type="checkbox" name="check" required><label><i>Tôi xác nhận tố cáo này là đúng sự thật!</i></label></div>
+					<div class="button-contain">
+						<input type="submit" class="button-2" name="submit" value="Gửi tố cáo">
+					</div>
 				</form>
 			</div>
-		<?php } ?>
+			<div class="form-content" id="content-2">
+				<div class="h1"><h1>GÓP Ý</h1></div>
+				<form action="../Form/report.php">
+					<div class="line-text"><label>Mã phiếu: </label><input type="text" class="readonly-input" name="ma" value="1" readonly></div>
+					<div class="line-text"><label>Người viết thư: </label><input type="text" class="readonly-input" name="ntc" value="luan" readonly></div>
+					<div class="line-text">
+						<label>Loại: </label><input type="radio" name="loai" value="gy" checked><label>Góp ý</label>
+						<label>Loại: </label><input type="radio" name="loai" value="kn"><label>Khiếu nại</label>
+					</div>
+					<div class="line-text"><label>Mô tả: </label></div>
+					<textarea cols="43" rows="5" name="mota" required></textarea>
+					<div class="line-text"><input type="checkbox" name="check" required><label><i>Nếu bạn muốn khiếu nại tố cáo, vui lòng để lại mã phiếu tố cáo để được xử lí nhanh hơn!</i></label></div>
+					<div class="button-contain">
+						<input type="submit" class="button-2" name="submit" value="Gửi góp ý">
+					</div>
+				</form>
+			</div>
+
+			<div class="form-content" id="content-3">
+				<div class="h1"><h1>LỊCH SỬ</h1></div>
+				<table class="tb">
+					<th>Mã</th>
+					<th>Nội dung</th>
+					<th>Trạng thái</th>
+				
+				<?php 
+				
+					$gykn=mysqli_query($con, "SELECT * FROM `gopyvakhieunai` INNER JOIN `chitietgyvkn` ON `gopyvakhieunai`.`ma`=`chitietgyvkn`.`ma` WHERE `gopyvakhieunai`.`username`='$username';");
+					while($gyvkn=mysqli_fetch_array($gykn)){
+				 ?>
+				 	<tr>
+				 		<td><?php echo $gyvkn['ma']; ?></td>
+				 		<td><?php 
+				 			if($gyvkn['loai']=='gy') echo "Bạn đã gửi góp ý.";
+				 			if($gyvkn['loai']=='kn') echo "Bạn đã gửi khiếu nại.";
+				 			if($gyvkn['loai']=='tctl') echo "Bạn đã tố cáo tài liệu có có mã tài liệu <span class=\"ts\">".$gyvkn['matailieu']."</span>.";
+				 			if($gyvkn['loai']=='tcnd') echo "Bạn đã tố cáo người dùng có có username <span class=\"ts\">".$gyvkn['manguoidung']."</span>.";
+				 		 ?></td>
+				 		<td><?php if($gyvkn['ketqua']!='') echo "Đã xử lí"; else echo "Đợi xử lí";?></td>
+				 	</tr>
+				<?php } ?>
+				</table>
+			</div>
+			<?php if($loai!='gykn') echo "<script>content(1);</script>";
+				else echo "<script>content(2);</script>";
+			 ?>
 		</div>
-
-		
-
-
 	</div>
-
 
 
 

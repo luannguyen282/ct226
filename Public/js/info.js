@@ -74,7 +74,9 @@ function eradio2(){
 }
 function addProPhoto(num){
 	document.getElementById('pp'+num).click();
+	document.getElementById('pp'+num).style='display: none;';
 }
+
 
 function editPro(num){
 	document.getElementById('product-d'+num).style="display: none;";

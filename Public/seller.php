@@ -20,6 +20,7 @@
 	<title>Trao đổi tài liệu</title>
 	<link rel="stylesheet" type="text/css" href="css/seller.css">
 	<script type="text/javascript" src="js/seller.js"></script>
+	<script type="text/javascript" src="js/home.js"></script>
 	<script type="text/javascript" src="js/alert.js"></script>
 	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
 </head>
@@ -27,12 +28,12 @@
 	
 	<div id="sub-menu">
 		<ul>
-			<li id="smenu-6"><a href="../index.php" style="color: blue;">Đăng xuất</a></li>
-			<li id="smenu-5"><a href="">Hỗ trợ</a></li>
-			<li id="smenu-4"><a href="">Thông tin liên hệ</a></li>			
-			<li id="smenu-3"><a href="">Điều khoản</a></li>
-			<li id="smenu-2"><a href="">Hướng dẫn sử dụng</a></li>
-			<li id="smenu-1"><a href="">Giới thiệu website</a></li>
+			<li id="smenu-6"><a href="../Form/logout.php" style="color: blue;">Đăng xuất</a></li>
+			<li id="smenu-5" onclick="click_object('smsb-5');"><a>Góp ý và khiếu nại</a><form action="report.php"><input type="submit" class="hidden" id="smsb-5" name="loai" value="gykn"></form></li>
+			<li id="smenu-4"  onclick="click_object('smsb-4');"><a>Tố cáo</a><form action="report.php"><input type="hidden" name="doituong" value="<?php echo $nguoidung['username'] ?>"><input type="submit" class="hidden" id="smsb-4" name="loai" value="tcnd"></form></li>			
+			<li id="smenu-3"><a href="policies.html">Điều khoản</a></li>
+			<li id="smenu-2"><a href="tutorial.html">Hướng dẫn sử dụng</a></li>
+			<li id="smenu-1"><a href="introduce.html">Giới thiệu website</a></li>
 		</ul>
 	</div>
 

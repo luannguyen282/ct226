@@ -1,7 +1,7 @@
 <?php 
     session_start();
     require 'conn.php';
-    echo $m = $_POST['matailieu'];
+    $m = $_POST['matailieu'];
     $dsh = mysqli_query($con, "SELECT * FROM `hinhtailieu` WHERE `hinhtailieu`.`matailieu` = $m;");
     if (isset($_POST['delete'])) {
         mysqli_query($con, "DELETE FROM `tailieu` WHERE `tailieu`.`matailieu` = $m");
@@ -33,7 +33,7 @@
 
        $dir = "C:\\xampp\htdocs\CT226\Database\photo/";
    for ($i=1; $i <=3 ; $i++) { 
-        echo $tf = 'pp'.$i;
+        $tf = 'pp'.$i;
     if (isset($_FILES['pp'.$i])) {
         $file = $_FILES['pp'.$i];
         print_r($file);

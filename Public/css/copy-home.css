@@ -12,10 +12,6 @@ body{
 	background-attachment: fixed;
 }
 
-a{
-	cursor: pointer;
-}
-
 #sub-menu{
 	height: 35px;
 	width: 100%;
@@ -301,10 +297,11 @@ a{
 	border: none;
 	cursor: pointer;
 	font-weight: bold;
-	margin-left: 15px;
 }
 
-
+#b2{
+	margin-left: 15px;
+}
 
 .page-num{
 	width: inherit;
@@ -342,6 +339,7 @@ a{
 
 #noti{
 	background: white;
+	background-image: url(../images/no-new-noti.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	position: absolute;
@@ -360,31 +358,7 @@ a{
 }
 #coat{
 	width: 100%;
-	height: calc(200% - 75px);
+	height: calc(200% - 45px);
 	position: absolute;
 	display: none;
-}
-#noti ul li{
-	line-height: 20px;
-}
-.noti-time{
-	font-size: 14px;
-	font-weight: bold;
-	color: blue;
-}
-.noti-text{
-	margin-left: 7px;
-	font-size: 15px;
-}
-.noti-but-con{
-	display: flex;
-	justify-content: center;
-	margin-top: 30px;
-}
-.noti-no{
-	display: flex;
-	height: inherit;
-	justify-content: center;
-	align-items: center;
-
 }

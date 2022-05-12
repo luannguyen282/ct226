@@ -11,8 +11,9 @@
         $result2=mysqli_query($con, "INSERT INTO `chitietdonhang` (`madonhang`, `dathang`, `chapnhan`, `lienhe`, `huy`, `hoantat`) VALUES ('$madonhang', (SELECT CURRENT_TIMESTAMP), NULL, NULL, NULL, NULL);");
         	if ($result1 && $result2) {
         		$_SESSION['taodonhang']=true;
+                mysqli_query($con,"UPDATE `tailieu` SET `matrangthai` = 'exchanging' WHERE `tailieu`.`matailieu` = ".$_GET['matailieu'].";");
         	}else $_SESSION['taodonhang']=false;}
 
-   header("Location: ../Public/home.php");
+   //header("Location: ../Public/home.php");
    $con->close();
  ?>
